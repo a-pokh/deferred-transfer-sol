@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { App } from './App';
+import { WalletProvider } from './components/WalletProvider';
+import GlobalStyle from './globalStyles';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GlobalStyle />
+    <WalletProvider>
+      <App />
+    </WalletProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

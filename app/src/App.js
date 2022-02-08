@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Layout } from './components/Layout';
 
-function App() {
+import { useProgramState } from './hooks/programState.js';
+
+import { TokenList } from './components/TokenList';
+import { ProgramState } from './components/ProgramState';
+
+export function App() {
+  const { programState } = useProgramState();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      {!programState && <ProgramState programState={programState} />}
+      {programState && <TokenList />}
+    </Layout>
   );
 }
 
-export default App;

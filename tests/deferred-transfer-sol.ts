@@ -21,7 +21,7 @@ describe('deferred-transfer-sol', () => {
   const transferTokenAccountKeypair = anchor.web3.Keypair.generate();
   const transferTokenAccount = transferTokenAccountKeypair.publicKey;
 
-  it('Is initialized!', async () => {
+  it('Is initialized', async () => {
     const provider = anchor.Provider.local();
     const initializer = provider.wallet.publicKey;
 
@@ -65,7 +65,7 @@ describe('deferred-transfer-sol', () => {
     });
   });
 
-  it('It does check days!', async () => {
+  it('Does check days', async () => {
     const provider = anchor.Provider.local();
     const initializer = provider.wallet.publicKey;
 
@@ -73,7 +73,6 @@ describe('deferred-transfer-sol', () => {
       [initializer.toBuffer()],
       program.programId
     )
-    console.log("bbbbb " + bump)
 
     for(let i = 0; i <= 10; i++) {
       await program.rpc.checkDays(new anchor.BN(bump), {
@@ -90,7 +89,28 @@ describe('deferred-transfer-sol', () => {
     console.log(stateAcc)
   });
 
-  it('It does check in!', async () => {
+  it('Does check in!', async () => {
+    const provider = anchor.Provider.local();
+    const initializer = provider.wallet.publicKey;
+
+    const [state] = await PublicKey.findProgramAddress(
+      [initializer.toBuffer()],
+      program.programId
+    )
+
+    await program.rpc.checkIn({
+      accounts: {
+        state,
+        initializer,
+      },
+    });
+
+    let stateAcc = await program.account.state.fetch(state);
+
+    console.log(stateAcc)
+  });
+
+  it('Allows to withdraw back', async () => {
     const provider = anchor.Provider.local();
     const initializer = provider.wallet.publicKey;
 
